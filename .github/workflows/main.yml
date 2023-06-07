@@ -11,4 +11,4 @@ jobs:
 
     steps:
       - name: Print Secret Value
-        run: echo ${{secrets.AWS_ACCESS_KEY_ID}}
+        run: env
