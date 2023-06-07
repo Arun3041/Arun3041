@@ -1,14 +1,33 @@
-name: Example Workflow
+name: Sync with S3 Bucket
 
 on:
   push:
     branches:
-      - master
+      - main
+      
 
 jobs:
-  example_job:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Secret Value
-        run: env
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+      - name: Sync files with S3 bucket
+        run: |
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }}/arun3041/
+
+
+
+
+
+
+
